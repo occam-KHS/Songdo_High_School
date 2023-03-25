@@ -15,7 +15,7 @@ def find_menu(substring):
     menu_list = []
     type_list = []
     for lunch_menu in lunch_menus:
-        menu = pd.read_excel(lunch_menu)
+        menu = pd.read_pickle(lunch_menu + '.pkl')
         menu = menu.replace('\n', '', regex=True)
         menu.replace(np.nan, '', inplace=True)
         for i, s in menu.iterrows():
@@ -28,7 +28,7 @@ def find_menu(substring):
                         type_list.append(j.split("[")[1][:2])
 
     for dinner_menu in dinner_menus:
-        menu = pd.read_excel(dinner_menu)
+        menu = pd.read_pickle(dinner_menu + '.pkl')
         menu = menu.replace('\n', '', regex=True)
         menu.replace(np.nan, '', inplace=True)
         for i, s in menu.iterrows():
