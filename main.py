@@ -62,8 +62,8 @@ if __name__ == '__main__':
         menu_df = pd.DataFrame({'날짜': menu_list, '식사구분': type_list })
         st.write(menu_df)
         df = find_orders(yymmdd, type_list)
-        st.markdown("**필터 전 결과**")
-        st.write(df)
+        # st.markdown("**필터 전 결과**")
+        # st.write(df)
         choice = st.sidebar.radio(label="날짜를 선택하세요", options = ['전체'] + menu_list)
         st.markdown("**필터 후 결과**")
         if choice!='전체':
