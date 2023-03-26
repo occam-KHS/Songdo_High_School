@@ -49,16 +49,24 @@ def find_orders(yymmdd, type_list):
         # print(mmdd.month, '월', mmdd.day,'일', meal)
         df = all_orders[(all_orders['식사구분'] == meal) & (all_orders['month'] == mmdd.month) & (all_orders['day'] == mmdd.day)]
         find_all = pd.concat([find_all, df], axis=0)
-    return find_all.drop(columns=['친환경인증정보','원산지','수입국','에듀파인전송여부','menu_date','month','day'])
+    return find_all.drop(columns=['친환경인증정보','원산지','수입국','에듀파인전송여부','menu_date'])
 
 
 if __name__ == '__main__':
 
     recipe = st.text_input("**레시피를 입력하세요**")
 
+
     if recipe:
         menu_list, type_list, yymmdd = find_menu(recipe)
         menu_df = pd.DataFrame({'날짜': menu_list, '식사구분': type_list })
         st.write(menu_df)
         df = find_orders(yymmdd, type_list)
+        st.markdown("**필터 전 결과**")
         st.write(df)
+        choice = st.sidebar.radio(label="날짜를 선택하세요", options = ['전체'] + menu_list)
+        st.markdown("**필터 후 결과**")
+        if choice!='전체':
+            st.write(df[ (df['month'] == int(choice.split('월')[0])) & ( df['day'] == int(choice.split('월')[1].replace('일','')) )])
+        else:
+            st.write(df)
